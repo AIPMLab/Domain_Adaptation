@@ -2,7 +2,22 @@ from efficientnet_pytorch import EfficientNet
 import torch
 import torch.nn as nn
 
+class RegNetBackbone(nn.Module):
+    def __init__(self, model_name='regnetx_200MF', pretrained=True):
+        super(RegNetBackbone, self).__init__()
+        backbone = torch.hub.load('facebookresearch/pycls:main', model_name, pretrained=pretrained)
+        self.model = nn.Sequential(*list(backbone.children())[:-2])
+        self._feature_dim = backbone.blocks[-1].output_features
 
+    def forward(self, x):
+        x = self.model(x)
+        x = torch.nn.functional.adaptive_avg_pool2d(x, output_size=1)
+        x = x.view(x.size(0), -1)
+        return x
+
+    def output_num(self):
+        return self._feature_dim
+        
 class EfficientNetBackbone(nn.Module):
     def __init__(self, model_name='efficientnet-b2', pretrained=True):
         super(EfficientNetBackbone, self).__init__()
