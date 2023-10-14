@@ -1,2 +1,3 @@
-# Domain_Adaptation
-This page is mainly for our testing codes with various domain adaptation techniques.
+# An official implementation for our DA simulation codes (paper entitled with Enhancing Classification Tasks through Domain Adaptation Strategies).
+# The code will be avaliable soon.
+# This work was in part supported by the github DA codebase : https://github.com/jindongwang/transferlearning/tree/master/code/DeepDA.
